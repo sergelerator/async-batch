@@ -1,6 +1,6 @@
 {
   "name": "async-batch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Asynchronously process task batches",
   "main": "lib/index.js",
   "module": "lib/index.js",
