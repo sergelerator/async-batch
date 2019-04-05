@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["es2018", "es2017", "es7", "es6", "dom"],
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "outDir": "./lib",
+    "paths": {
+      "*": ["*"]
+    },
+    "strict": true,
+    "allowJs": false,
+    "declaration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true
+  },
+  "exclude": ["node_modules", "__tests__", "coverage", "lib"]
+}

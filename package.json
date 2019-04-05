@@ -1,0 +1,21 @@
+{
+  "name": "async-batch",
+  "version": "1.0.0",
+  "description": "Asynchronously process task batches",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": "https://github.com/sergelerator/async-batch",
+  "author": "Sergio Morales",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --coverage --config jest.config.json"
+  },
+  "devDependencies": {
+    "@types/jest": "24.0.11",
+    "jest": "24.5.0",
+    "ts-jest": "24.0.0",
+    "typescript": "3.3.4000"
+  }
+}
