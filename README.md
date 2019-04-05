@@ -1,4 +1,4 @@
-# sync-queues
+# async-batch
 
 [![Build Status](https://travis-ci.org/sergelerator/async-batch.svg?branch=master)](https://travis-ci.org/sergelerator/async-batch)
 
