@@ -29,11 +29,11 @@ async function squares() {
 
   const result = await asyncBatch(
     input,
-    (task: number) => new Promise(
+    (task: number, taskIndex: number, workerIndex: number) => new Promise(
       (resolve) => setTimeout(
         () => processingOrder.push(task) && resolve(task * task),
         task * 25,
-      )
+      ),
     ),
     2,
   );

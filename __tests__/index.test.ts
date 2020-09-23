@@ -39,9 +39,12 @@ describe('asyncBatch', () => {
 
     const result = await asyncBatch(
       input,
-      (t) => (new Promise(
-        (resolve) => setTimeout(() => processingOrder.push(t) && resolve(t*t), t*25)
-      )),
+      (t) => new Promise(
+        (resolve) => setTimeout(
+          () => processingOrder.push(t) && resolve(t*t),
+          t*25,
+        ),
+      ),
       2,
     );
 
@@ -49,14 +52,24 @@ describe('asyncBatch', () => {
     expect(processingOrder).toEqual(expectedProcessingOrder);
   });
 
-  test('concurrency validation', async () => {
+  test('task and worker index', async () => {
     const input: number[] = range(0, 2);
     const subject = () => asyncBatch(
       input,
-      async (t) => t,
-      0,
+      async (t, taskIndex, workerIndex) => {
+        expect(t).toEqual(taskIndex);
+        expect(taskIndex).toEqual(workerIndex);
+        return t;
+      },
+      5,
     );
 
-    await expect(subject()).rejects.toEqual(new Error("The value of 'workers' must be at least 1"));
+    await expect(subject()).resolves.toEqual(input);
+  });
+
+  test('worker count minimum', async () => {
+    await expect(
+      asyncBatch([1], (t) => new Promise((r) => r(t)), 0),
+    ).resolves.toEqual([1]);
   });
 });
