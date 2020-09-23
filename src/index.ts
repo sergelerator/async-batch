@@ -1,27 +1,22 @@
 const asyncBatch = async <TaskType, ResultType>(
   tasks: TaskType[],
-  handler: (task: TaskType) => Promise<ResultType>,
-  _workers: number,
+  handler: (task: TaskType, taskIndex: number, workerIndex: number) => Promise<ResultType>,
+  desiredWorkers: number,
 ): Promise<ResultType[]> => {
-  const workersCount = Math.floor(_workers);
-  if (workersCount < 1) {
-    throw new Error("The value of 'workers' must be at least 1");
-  }
-
-  const workers = new Array(workersCount);
-  for (let i = 0; i < workersCount; i++) {
-    workers[i] = i;
-  }
+  // Cap workers count to task list size, with a min of 1 worker
+  const workersCount = Math.max(Math.floor(Math.min(desiredWorkers, tasks.length)), 1);
 
   const results: ResultType[] = [];
   let i = 0;
-  await Promise.all(workers.map(async () => {
-    while (i < tasks.length) {
-      const taskId = i;
-      i++;
-      results[taskId] = await handler(tasks[taskId]);
-    }
-  }));
+  await Promise.all(
+    Array.from({ length: workersCount }).map(async (w, workerIndex) => {
+      while (i < tasks.length) {
+        const taskIndex = i;
+        i++;
+        results[taskIndex] = await handler(tasks[taskIndex], taskIndex, workerIndex);
+      }
+    }),
+  );
   return results;
 };
 
