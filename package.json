@@ -8,6 +8,7 @@
   "repository": "https://github.com/sergelerator/async-batch",
   "author": "Sergio Morales",
   "license": "MIT",
+  "files": ["lib", "src"],
   "scripts": {
     "build": "tsc",
     "test": "jest --coverage --config jest.config.json"
